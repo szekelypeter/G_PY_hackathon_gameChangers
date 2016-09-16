@@ -11,5 +11,3 @@ class Enemy(GameObject):
 
     def reload(self):
         pass
-
-
