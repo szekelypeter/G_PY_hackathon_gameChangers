@@ -12,28 +12,29 @@ if not pygame.joystick: print('Warning, joystick disabled')
 class GameController:
 
     def __init__(self):
+        pygame.init()
+        pygame.mixer.init()
+        pygame.joystick.init()
+
+        self.__clock = pygame.time.Clock()
+        self.__screen = pygame.display.set_mode(GameConstants.SCREEN_SIZE)
+        self.__sounds = []
+        self.__gameMode = GameConstants.GAME_MODE_SINGLE_PLAYER
+        self.__currentDifficulty = GameConstants.DIFFICULTY_NORMAL
+        self.__difficulties = []
+        self.__players = []
+        self.__enemies = []
         self.__currentScene = GameConstants.SCENE_START
         self.__scenes = \
-            [
+        [
             StartScene(self),
             MenuScene(self),
             OptionScene(self),
             HighScoreScene(self),
             PlayScene(self),
             GameOverScene(self)
-            ]
-        self.__gameMode = GameConstants.GAME_MODE_SINGLE_PLAYER
-        self.__currentDifficulty = GameConstants.DIFFICULTY_NORMAL
-        self.__difficulties = []
-        self.__sounds = []
-        self.__clock = pygame.time.Clock()
-        self.__screen = pygame.display.set_mode(GameConstants.SCREEN_SIZE)
-        self.__players = []
-        self.__enemies = []
+        ]
 
-        pygame.init()
-        pygame.mixer.init()
-        pygame.joystick.init()
 
     def start(self):
         while True:
@@ -54,5 +55,10 @@ class GameController:
     def playSound(self):
         pass
 
+    def getClock(self):
+        return self.__clock
+
+    def getScreen(self):
+        return self.__screen
 
 GameController().start()

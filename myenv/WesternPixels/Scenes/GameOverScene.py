@@ -1,5 +1,5 @@
 from Scenes import Scene
-
+from pygame.locals import *
 
 class GameOverScene(Scene):
 
