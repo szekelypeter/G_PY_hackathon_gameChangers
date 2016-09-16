@@ -1,2 +1,4 @@
-__author__ = "Knapecz Ádám"
-__date__ = "9/16/2016"
+class Gun:
+
+    def __init__(self):
+        self.AMMO = 0
