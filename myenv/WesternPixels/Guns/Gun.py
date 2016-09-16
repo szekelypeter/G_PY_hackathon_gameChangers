@@ -1,7 +1,7 @@
 class Gun:
 
-    def __init__(self):
-        self.AMMO = None
-        self.currentAmmo = None
-        self.power = None
-        self.crossHairs = None
+    def __init__(self, ammo, power, crossHairs):
+        self.AMMO = ammo
+        self.currentAmmo = self.AMMO
+        self.power = power
+        self.crossHairs = crossHairs
