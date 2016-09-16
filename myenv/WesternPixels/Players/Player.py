@@ -5,12 +5,12 @@ from Shared import GameObject
 
 class Player(GameObject):
 
-    def __init__(self, gameController, gun):
+    def __init__(self, gameController, gun, image, position):
         self.__gameController = gameController
         self.__gun = gun
         self.__takeCover = False
         
-        super(Player, self).__init__()
+        super(Player, self).__init__(image, position)
 
     def getTakeCover(self):
         return self.__takeCover
