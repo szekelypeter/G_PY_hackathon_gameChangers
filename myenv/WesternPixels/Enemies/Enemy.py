@@ -4,10 +4,10 @@ from Shared import GameObject
 class Enemy(GameObject):
 
     def __init__(self, gameController, gun):
-        self.health = None
-        self.gameController = gameController
-        self.gun = gun
-        self.shootingTime = None
+        self.__health = None
+        self.__gameController = gameController
+        self.__gun = gun
+        self.__shootingTime = None
 
     def reload(self):
         pass
