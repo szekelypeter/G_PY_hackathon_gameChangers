@@ -5,22 +5,22 @@ import pygame
 class GameController:
 
     def __init__(self):
-        self.currentScene = 0
-        self.scenes = []
-        self.gameMode = 0
-        self.currentDifficulty = 1
-        self.difficulties = []
-        self.sounds = []
-        self.clock = pygame.time.Clock()
-        self.screen = pygame.display.set_mode()
-        self.players = []
-        self.enemies = []
+        self.__currentScene = 0
+        self.__scenes = []
+        self.__gameMode = 0
+        self.__currentDifficulty = 1
+        self.__difficulties = []
+        self.__sounds = []
+        self.__clock = pygame.time.Clock()
+        self.__screen = pygame.display.set_mode()
+        self.__players = []
+        self.__enemies = []
 
     def start(self):
         pass
 
     def getScene(self, scene):
-        return self.currentScene
+        return self.__currentScene
 
     def setScene(self, scene):
         self.__currentScene = scene
