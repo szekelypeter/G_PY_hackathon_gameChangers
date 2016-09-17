@@ -71,6 +71,9 @@ class PlaySceneSingle(Scene):
         self.isRenderedOnce = False
         self.currentPaff = 1
 
+        start_ticks = pygame.time.get_ticks()
+        self.end_ticks = start_ticks + 15000
+
 
 
 
@@ -204,25 +207,25 @@ class PlaySceneSingle(Scene):
     def paff(self):
         game = self.getGameController()
         if self.currentPaff == 1:
-            game.playSound(2, indefinitely=0)
+            game.playSound(2, indefinitely=0, gun=True)
             self.currentPaff = 2
         elif self.currentPaff == 2:
-            game.playSound(3, indefinitely=0)
+            game.playSound(3, indefinitely=0, gun=True)
             self.currentPaff = 3
         elif self.currentPaff == 3:
-            game.playSound(4, indefinitely=0)
+            game.playSound(4, indefinitely=0, gun=True)
             self.currentPaff = 4
         elif self.currentPaff == 4:
-            game.playSound(5, indefinitely=0)
+            game.playSound(5, indefinitely=0, gun=True)
             self.currentPaff = 5
         elif self.currentPaff == 5:
-            game.playSound(6, indefinitely=0)
+            game.playSound(6, indefinitely=0, gun=True)
             self.currentPaff = 6
         elif self.currentPaff == 6:
-            game.playSound(7, indefinitely=0)
+            game.playSound(7, indefinitely=0, gun=True)
             self.currentPaff = 7
         elif self.currentPaff == 7:
-            game.playSound(8, indefinitely=0)
+            game.playSound(8, indefinitely=0, gun=True)
             self.currentPaff = 1
         pygame.time.delay(350)
         for i in range(len(self.listOfEnemiesX)):
@@ -250,11 +253,11 @@ class PlaySceneSingle(Scene):
                     shot = random.randint(0, 400)
                     if shot <= x * y:
                         if self.listOfEnemiesSpecies[i]=="chicken":
-                            game.playSound(9, indefinitely=0)
+                            game.playSound(9, indefinitely=0, inTheTarge=True)
                         if self.listOfEnemiesSpecies[i] == "clown":
-                            game.playSound(10, indefinitely=0)
+                            game.playSound(10, indefinitely=0, inTheTarge=True)
                         if self.listOfEnemiesSpecies[i] == "nun":
-                            game.playSound(11, indefinitely=0)
+                            game.playSound(11, indefinitely=0, inTheTarge=True)
                         del self.listOfEnemiesSpecies[i]
                         del self.listOfEnemies[i]
                         del self.listOfEnemiesX[i]
@@ -299,34 +302,36 @@ class PlaySceneSingle(Scene):
 
 
     def handleEvents(self, events):
-        gameController = self.getGameController()
+        self.gameController = self.getGameController()
         changeX = 0
         for event in events:
             if event.type == QUIT:
                 exit()
+            if self.end_ticks <= pygame.time.get_ticks():
+                print("VEGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
             if event.type == JOYAXISMOTION:
-                if gameController.joy1.get_axis(0) < 0:
+                if self.gameController.joy1.get_axis(0) < 0:
                     changeX = 10
                     changeAngle = 0.703125
                     self.moveLeftRight(changeX, changeAngle)
                     return
-                elif gameController.joy1.get_axis(0) > 0:
+                elif self.gameController.joy1.get_axis(0) > 0:
                     changeX = -10
                     changeAngle = -0.703125
                     self.moveLeftRight(changeX, changeAngle)
                     return
-                elif gameController.joy1.get_axis(1) < 0:
+                elif self.gameController.joy1.get_axis(1) < 0:
                     changeY = -4
                     self.moveUpDown(changeY)
                     return
-                elif gameController.joy1.get_axis(1) > 0:
+                elif self.gameController.joy1.get_axis(1) > 0:
                     changeY = 4
                     self.moveUpDown(changeY)
                     return
             if event.type == JOYBUTTONDOWN:
-                if gameController.joy1.get_button(0) == True:
+                if self.gameController.joy1.get_button(0) == True:
                     exit()
-                if gameController.joy1.get_button(10) == True:
+                if self.gameController.joy1.get_button(10) == True:
                     self.paff()
                     return
 

@@ -87,10 +87,13 @@ class GameController:
     def getPlayer(self):
         pass
 
-    def playSound(self, soundClip, indefinitely=0):
+    def playSound(self, soundClip, indefinitely=0, gun=False):
         sound = self.__sounds[soundClip]
         self.__currentSound = sound
+        if gun:
+            sound.set_volume(0.5)
         sound.play(indefinitely)
+
 
     def stopSound(self):
         self.__currentSound.stop()
