@@ -17,7 +17,7 @@ class GameController:
         pygame.init()
         pygame.mixer.init()
         pygame.joystick.init()
-        pygame.key.set_repeat(100, 5)
+        # pygame.key.set_repeat(100, 5)
 
         self.joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
         for joy in self.joysticks:
