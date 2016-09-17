@@ -56,6 +56,7 @@ class PlaySceneSingle(Scene):
 
         self.currentAngle = 0
 
+        self.listOfEnemiesSpecies= []
         self.listOfEnemies = []
         self.listOfEnemiesX = []
         self.listOfEnemiesY = []
@@ -74,6 +75,7 @@ class PlaySceneSingle(Scene):
 
     def render(self, centered=False, y=0):
         if not self.isRenderedOnce:
+            self.getGameController().fillBackGround()
             self.isRenderedOnce = True
             for i in range(6):
                 side = random.randint(1, 10)
@@ -81,10 +83,13 @@ class PlaySceneSingle(Scene):
                 if 6 >= side:
                     if kind == 1:
                         self.listOfEnemies.append(self.chickenHead)
+                        self.listOfEnemiesSpecies.append("chicken")
                     if kind == 2:
                         self.listOfEnemies.append(self.nunHead)
+                        self.listOfEnemiesSpecies.append("nun")
                     if kind == 3:
                         self.listOfEnemies.append(self.clownHead)
+                        self.listOfEnemiesSpecies.append("clown")
                     number = random.randint(0, 34)
                     thechoosen = self.headPossible[number]
                     first = thechoosen[0]
@@ -97,10 +102,13 @@ class PlaySceneSingle(Scene):
                 if side == 7 or side == 8:
                     if kind == 1:
                         self.listOfEnemies.append(self.chickenFront)
+                        self.listOfEnemiesSpecies.append("chicken")
                     if kind == 2:
                         self.listOfEnemies.append(self.nunFront)
+                        self.listOfEnemiesSpecies.append("nun")
                     if kind == 3:
                         self.listOfEnemies.append(self.clownFront)
+                        self.listOfEnemiesSpecies.append("clown")
                     number = random.randint(0, 11)
                     self.listOfEnemiesX.append(self.fronPossible[number])
                     self.listOfEnemiesY.append(380)
@@ -110,10 +118,13 @@ class PlaySceneSingle(Scene):
                 if side == 9:
                     if kind == 1:
                         self.listOfEnemies.append(self.chickenRight)
+                        self.listOfEnemiesSpecies.append("chicken")
                     if kind == 2:
                         self.listOfEnemies.append(self.nunRight)
+                        self.listOfEnemiesSpecies.append("nun")
                     if kind == 3:
                         self.listOfEnemies.append(self.clownRight)
+                        self.listOfEnemiesSpecies.append("clown")
                     number = random.randint(0, 8)
                     self.listOfEnemiesX.append(self.rightSidePossible[number])
                     self.listOfEnemiesY.append(380)
@@ -123,10 +134,13 @@ class PlaySceneSingle(Scene):
                 if side == 10:
                     if kind == 1:
                         self.listOfEnemies.append(self.chickenLeft)
+                        self.listOfEnemiesSpecies.append("chicken")
                     if kind == 2:
                         self.listOfEnemies.append(self.nunLeft)
+                        self.listOfEnemiesSpecies.append("nun")
                     if kind == 3:
                         self.listOfEnemies.append(self.clownLeft)
+                        self.listOfEnemiesSpecies.append("clown")
                     number = random.randint(0, 3)
                     self.listOfEnemiesX.append(self.leftSidePossible[number])
                     self.listOfEnemiesY.append(380)
@@ -214,6 +228,13 @@ class PlaySceneSingle(Scene):
                         y = abs(self.listOfEnemiesY[i] - self.crossY - 8 + self.listOfEnemiesHeight[i])
                     shot = random.randint(0, 400)
                     if shot <= x * y:
+                        if self.listOfEnemiesSpecies[i]=="chicken":
+                            pass
+                        if self.listOfEnemiesSpecies[i] == "clown":
+                            pass
+                        if self.listOfEnemiesSpecies[i] == "nun":
+                            pass
+                        del self.listOfEnemiesSpecies[i]
                         del self.listOfEnemies[i]
                         del self.listOfEnemiesX[i]
                         del self.listOfEnemiesY[i]

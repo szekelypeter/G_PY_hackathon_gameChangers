@@ -13,8 +13,8 @@ class GameConstants:
     MENU_HIGHSCORE = ("HighScore", 400)
     MENU_EXIT = ("Exit", 550)
 
-    GAME_MODE_SINGLE = ("Single", -200)
-    GAME_MODE_MULTI = ("Multi", 100)
+    GAME_MODE_SINGLE = ("Single", 200)
+    GAME_MODE_MULTI = ("Multi", 400)
     HIGHSCORE = ("Highscore", 100)
 
     FPS = 60
@@ -27,7 +27,7 @@ class GameConstants:
     SCENE_PLAY_MULTI = 5
     SCENE_GAMEOVER = 6
 
-    LOADING_TIME = 1
+    LOADING_TIME = 10
 
     GAME_MODE_SINGLE_PLAYER = 0
     GAME_MODE_MULTI_PLAYER = 1

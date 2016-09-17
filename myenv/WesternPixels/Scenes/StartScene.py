@@ -28,6 +28,7 @@ class StartScene(Scene):
             pygame.display.flip()
             if seconds > GameConstants.LOADING_TIME:
                 self.getGameController().setScene(GameConstants.SCENE_MENU)
+                game.playSound(GameConstants.SOUND_SCENE_MENU, indefinitely=0)
                 break
 
     def handleEvents(self, events):
