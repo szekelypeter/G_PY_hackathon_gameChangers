@@ -17,7 +17,7 @@ class PlaySceneSingle(Scene):
         self.map = Map()
         self.scene1 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_ONE)
         self.scene2 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_TWO)
-        self.scene3 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_THRREE)
+        self.scene3 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_THREE)
         self.scene4 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_FOUR)
 
         self.chickenFront = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CHICKEN_FRONT)
@@ -75,7 +75,7 @@ class PlaySceneSingle(Scene):
     def render(self, centered=False, y=0):
         if not self.isRenderedOnce:
             self.isRenderedOnce = True
-            for i in range(10):
+            for i in range(6):
                 side = random.randint(1, 10)
                 kind = random.randint(1, 3)
                 if 6 >= side:
@@ -140,7 +140,7 @@ class PlaySceneSingle(Scene):
             self.screen.blit(self.crosshairs, (self.crossX, self.crossY))
             self.screen.blit(self.crosshairsCenter, (self.crossX + 8, self.crossY + 8))
             self.screen.blit(self.radar, (self.radarCenterX, self.radarCenterY))
-            pygame.display.flip()
+            pygame.display.update()
 
 
 
@@ -171,10 +171,14 @@ class PlaySceneSingle(Scene):
                 if 4 * self.width + self.currentposX + self.listOfEnemiesX[i] > 0:
                     self.listOfEnemiesXCurrent[i] = 4 * self.width + self.currentposX + self.listOfEnemiesX[i]
                     self.screen.blit(self.listOfEnemies[i], (4 * self.width + self.currentposX + self.listOfEnemiesX[i], self.listOfEnemiesY[i]))
+                    print(self.listOfEnemies[i], (4 * self.width + self.currentposX + self.listOfEnemiesX[i], self.listOfEnemiesY[i]))
             if -self.listOfEnemiesX[i] - self.listOfEnemiesWidth[i] < self.currentposX and -self.listOfEnemiesX[i] + self.listOfEnemiesWidth[
                 i] > self.currentposX - self.width:
                 self.listOfEnemiesXCurrent[i] = self.listOfEnemiesX[i] + self.currentposX
                 self.screen.blit(self.listOfEnemies[i], (self.listOfEnemiesX[i] + self.currentposX, self.listOfEnemiesY[i]))
+                print(self.listOfEnemies[i], (self.listOfEnemiesX[i] + self.currentposX, self.listOfEnemiesY[i]))
+        print(self.listOfEnemiesX)
+        pygame.display.update()
 
     def draw(self):
         self.drawBackground()
@@ -182,7 +186,7 @@ class PlaySceneSingle(Scene):
         self.screen.blit(self.crosshairs, (self.crossX, self.crossY))
         self.screen.blit(self.crosshairsCenter, (self.crossX + 8, self.crossY + 8))
         self.screen.blit(self.rot_center(self.radar, self.currentAngle), (self.radarCenterX, self.radarCenterY))
-        pygame.display.flip()
+        pygame.display.update()
 
 
     def paff(self):

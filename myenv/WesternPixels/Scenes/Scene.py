@@ -27,10 +27,10 @@ class Scene:
     def clearText(self):
         self.__texts = []
 
-    def addText(self, string, x=0, y=0, color=[255, 255, 255], background=[0, 0, 0], size=17, y_coordinate=0):
+    def addText(self, string, x=0, y=0, color=[255, 255, 255], background=GameConstants.BEIGE, size=35, y_coordinate=0):
         font = pygame.font.Font(None, size)
         self.__texts.append([font.render(string, True, color, background), (x, y), y_coordinate])
 
-    def changeText(self, string, x=0, y=0, color=[255, 255, 255], background=[0, 0, 0], size=17, index=-1, y_coordinate=0):
+    def changeText(self, string, x=0, y=0, color=[255, 255, 255], background=GameConstants.BEIGE, size=35, index=-1, y_coordinate=0):
         font = pygame.font.Font(None, size)
         self.__texts[index] = [font.render(string, True, color, background), (x, y), y_coordinate]

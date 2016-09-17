@@ -7,10 +7,11 @@ class GameConstants:
 
     BLACK = (0, 0, 0)
     RED = (255, 0, 0)
+    BEIGE = (194, 87, 72)
 
-    MENU_PLAY = ("Play", -300)
-    MENU_HIGHSCORE = ("HighScore", -150)
-    MENU_EXIT = ("Exit", 50)
+    MENU_PLAY = ("Play", 250)
+    MENU_HIGHSCORE = ("HighScore", 400)
+    MENU_EXIT = ("Exit", 550)
 
     GAME_MODE_SINGLE = ("Single", -200)
     GAME_MODE_MULTI = ("Multi", 100)
@@ -41,9 +42,9 @@ class GameConstants:
     IMAGE_SCENE_MENU = os.path.join("Assets", "Images", "Scenes", "Menu", "menu.png")
 
     IMAGE_SCENE_PLAY_BACKGROUND_ONE = os.path.join("Assets", "Images", "Scenes", "Play", "Background", "background01.png")
-    IMAGE_SCENE_PLAY_BACKGROUND_TWO = os.path.join("Assets", "Images", "Scenes", "Play","Background",  "background02.png")
-    IMAGE_SCENE_PLAY_BACKGROUND_THRREE = os.path.join("Assets", "Images", "Scenes", "Play","Background",  "background03.png")
-    IMAGE_SCENE_PLAY_BACKGROUND_FOUR = os.path.join("Assets", "Images", "Scenes", "Play","Background",  "background04.png")
+    IMAGE_SCENE_PLAY_BACKGROUND_THREE = os.path.join("Assets", "Images", "Scenes", "Play","Background",  "background03.png")
+    IMAGE_SCENE_PLAY_BACKGROUND_FOUR = os.path.join("Assets", "Images", "Scenes", "Play","Background",  "background02.png")
+    IMAGE_SCENE_PLAY_BACKGROUND_TWO = os.path.join("Assets", "Images", "Scenes", "Play","Background",  "background04.png")
 
     IMAGE_SCENE_PLAY_CROSSHAIRS = os.path.join("Assets", "Images", "Scenes", "Play", "Crosshairs", "crosshairs.png")
     IMAGE_SCENE_PLAY_CROSSHAIRS_CENTER = os.path.join("Assets", "Images", "Scenes", "Play", "Crosshairs", "crosshairscenter.png")
