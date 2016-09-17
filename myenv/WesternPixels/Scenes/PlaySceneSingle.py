@@ -308,17 +308,22 @@ class PlaySceneSingle(Scene):
                     changeX = 10
                     changeAngle = 0.703125
                     self.moveLeftRight(changeX, changeAngle)
+                    return
                 elif gameController.joy1.get_axis(0) > 0:
                     changeX = -10
                     changeAngle = -0.703125
                     self.moveLeftRight(changeX, changeAngle)
+                    return
                 elif gameController.joy1.get_axis(1) < 0:
                     changeY = -4
                     self.moveUpDown(changeY)
+                    return
                 elif gameController.joy1.get_axis(1) > 0:
                     changeY = 4
                     self.moveUpDown(changeY)
+                    return
             if event.type == JOYBUTTONDOWN:
                 if gameController.joy1.get_button(10) == True:
                     self.paff()
+                    return 
 
