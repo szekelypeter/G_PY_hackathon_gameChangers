@@ -22,7 +22,7 @@ class MenuScene(Scene):
 
     def handleEvents(self, events):
         game = self.getGameController()
-        game.playSound(GameConstants.SOUND_SCENE_MENU, indefinitely=1)
+        game.playSound(GameConstants.SOUND_SCENE_MENU, indefinitely=0)
         for event in events:
             if event.type == QUIT:
                 exit()

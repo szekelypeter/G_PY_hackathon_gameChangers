@@ -17,6 +17,7 @@ class GameController:
         pygame.init()
         pygame.mixer.init()
         pygame.joystick.init()
+        pygame.key.set_repeat(100, 5)
 
         self.__clock = pygame.time.Clock()
         self.__screen = pygame.display.set_mode(GameConstants.SCREEN_SIZE)
