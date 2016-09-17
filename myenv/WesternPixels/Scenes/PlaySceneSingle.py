@@ -49,7 +49,7 @@ class PlaySceneSingle(Scene):
         self.radarCenterX = 1160
         self.radarCenterY = 380
 
-        self.crossX = 722
+        self.crossX = 622 #722
         self.crossY = 232
 
         self.width = GameConstants.SCREEN_SIZE[0]
@@ -224,6 +224,7 @@ class PlaySceneSingle(Scene):
         elif self.currentPaff == 7:
             game.playSound(8, indefinitely=0)
             self.currentPaff = 1
+        pygame.time.delay(350)
         for i in range(len(self.listOfEnemiesX)):
             x = 0
             y = 0
@@ -249,11 +250,11 @@ class PlaySceneSingle(Scene):
                     shot = random.randint(0, 400)
                     if shot <= x * y:
                         if self.listOfEnemiesSpecies[i]=="chicken":
-                            pass
+                            game.playSound(9, indefinitely=0)
                         if self.listOfEnemiesSpecies[i] == "clown":
-                            pass
+                            game.playSound(10, indefinitely=0)
                         if self.listOfEnemiesSpecies[i] == "nun":
-                            pass
+                            game.playSound(11, indefinitely=0)
                         del self.listOfEnemiesSpecies[i]
                         del self.listOfEnemies[i]
                         del self.listOfEnemiesX[i]
@@ -263,7 +264,7 @@ class PlaySceneSingle(Scene):
                         del self.listOfEnemiesHeight[i]
                         break
 
-
+        pygame.time.delay(250)
         self.draw()
 
     def rot_center(self, image, angle):

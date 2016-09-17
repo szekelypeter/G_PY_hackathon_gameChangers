@@ -25,16 +25,10 @@ class GameController:
         self.joy1 = self.joysticks[0]
         # joy2 = joysticks[1]
         self.buttons = self.joy1.get_numbuttons()
-        print(self.buttons)
         joy_buttons = []
         for i in range(self.buttons):
             joy_buttons.append(self.joy1.get_button(i))
-        print(joy_buttons)
 
-        for joy in self.joysticks:
-            if joy.get_init() == True:
-                print("Initialized")
-        # -------- Main Program Loop ----------
 
         self.__clock = pygame.time.Clock()
         self.__screen = pygame.display.set_mode(GameConstants.SCREEN_SIZE)
@@ -53,6 +47,10 @@ class GameController:
                 pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_PUFF_5),
                 pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_PUFF_6),
                 pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_PUFF_7),
+
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_ENEMIES_CHICKEN),
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_ENEMIES_CLOWN),
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_ENEMIES_NUN),
             ]
         self.__gameMode = GameConstants.GAME_MODE_SINGLE_PLAYER
         self.__currentDifficulty = GameConstants.DIFFICULTY_NORMAL
