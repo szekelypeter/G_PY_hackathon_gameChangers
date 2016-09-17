@@ -9,13 +9,13 @@ from Shared import GameConstants
 class StartScene(Scene):
     def __init__(self, gameController):
         super(StartScene, self).__init__(gameController)
-        self.__sprites = [pygame.image.load(GameConstants.IMAGE_SCENE_START_LOADING_ONE).convert(),
-                          pygame.image.load(GameConstants.IMAGE_SCENE_START_LOADING_TWO).convert()]
-        self.addText("Lo' - ading", x=300, y=200, size=35)
+        self.__sprites = [pygame.image.load(GameConstants.IMAGE_SCENE_START_LOADING_ONE),
+                          pygame.image.load(GameConstants.IMAGE_SCENE_START_LOADING_TWO)]
 
     def render(self, centered=False, y=0):
         start_ticks = pygame.time.get_ticks()
-        self.getGameController().playSound(GameConstants.SOUND_SCENE_START_LOADING_HORSE)
+        game = self.getGameController()
+        game.playSound(GameConstants.SOUND_SCENE_START_LOADING_HORSE)
         while True:
             super(StartScene, self).render(True, -150)
             seconds = (pygame.time.get_ticks() - start_ticks) / 1000

@@ -2,6 +2,7 @@ import random
 import math
 import pygame
 
+from Maps import Map
 from Scenes import Scene
 from pygame.locals import *
 
@@ -9,212 +10,224 @@ from Shared import GameConstants
 
 
 class PlaySceneSingle(Scene):
+    crossX = 722
+    crossY = 232
+    currentposX, radarSign, currentAngle, radar,
+    self.currentposX = 0
+    self.currentAngle = 0
+    self.radarCenterX = 1160
+    self.radarCenterY = 380
+
     def __init__(self, gameController):
         super(PlaySceneSingle, self).__init__(gameController)
+        self.map = Map()
+        self.scene1 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_ONE)
+        self.scene2 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_TWO)
+        self.scene3 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_THRREE)
+        self.scene4 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_FOUR)
+
+        self.chickenFront = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CHICKEN_FRONT)
+        self.chickenHead = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CHICKEN_HEAD)
+        self.chickenLeft = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CHICKEN_LEFT)
+        self.chickenRight = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CHICKEN_RIGHT)
+
+        self.clownFront = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CLOWN_FRONT)
+        self.clownHead = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CLOWN_HEAD)
+        self.clownLeft = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CLOWN_LEFT)
+        self.clownRight = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CLOWN_RIGHT)
+
+        self.nunFront = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_NUN_FRONT)
+        self.nunHead = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_NUN_HEAD)
+        self.nunLeft = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_NUN_LEFT)
+        self.nunRight = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_NUN_RIGHT)
+
+        self.crosshairs = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_CROSSHAIRS)
+        self.crosshairsCenter = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_CROSSHAIRS_CENTER)
+        self.radar = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_RADAR)
+
+        self.scene1 = self.scene1.convert()
+        self.scene4 = self.scene2.convert()
+        self.scene3 = self.scene3.convert()
+        self.scene2 = self.scene4.convert()
+
+        self.crossHair = self.crosshairs.convert()
+        self.crossHairCenter = self.crosshairsCenter.convert()
+        self.radar = self.radar.convert()
+
+        self.headPossible = self.map.headPossible
+        self.fronPossible = self.map.frontPossible
+        self.leftSidePossible = self.map.leftSidePossible
+        self.rightSidePossible = self.map.rightSidePossible
+
+        self.currentposX = 0
+        self.currentAngle = 0
+        self.radarCenterX = 1160
+        self.radarCenterY = 380
+
+
+
+        self.changeX = 0
+
+        self.listOfEnemies = []
+        self.listOfEnemiesX = []
+        self.listOfEnemiesY = []
+        self.listOfEnemiesXCurrent = []
+        self.listOfEnemiesHeight = []
+        self.listOfEnemiesWidth = []
+
+        self.listOfColors = [self.scene1, self.scene2, self.scene3, self.scene4]
+
+        self.screen = self.getGameController().getScreen()
+
+        self.width = GameConstants.SCREEN_SIZE[0]
+
 
     def render(self, centered=False, y=0):
-
-        screen = self.getGameController().getScreen()
-
-
-        scene1 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_ONE).convert()
-        scene4 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_TWO).convert()
-        scene3 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_THRREE).convert()
-        scene2 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_FOUR).convert()
-        crossHair = pygame.image.load('crosshairs.png')
-        crossHairCenter = pygame.image.load('crosshairscenter.png')
-        radar = pygame.image.load('radar.png')
-
-        fronPossible = [288, 568, 1072, 1412, 1660, 1888, 2408, 2896, 3392, 4292, 4696, 5044]
-        rightSidePossible = [384, 1200, 1536, 2120, 2504, 3120, 3520, 3836, 4920]
-        leftSidePossible = [4088, 3676, 3288, 2688]
-        headPossible = [[48, 380], [160, 380], [36, 224], [304, 224], [456, 280], [456, 372], [568, 56], [568, 280],
-                        [680, 280], [680, 372], [884, 348], [1776, 280],
-                        [1776, 372], [1888, 56], [1888, 280], [2000, 280], [2000, 372], [2160, 220], [2168, 380],
-                        [2280, 380], [2776, 276], [2776, 372], [3008, 276],
-                        [3008, 372], [3392, 192], [4144, 372], [4208, 372], [4292, 184], [4396, 372], [4460, 372],
-                        [4576, 276], [4576, 372], [4808, 276], [4808, 372], [4944, 328]]
-        listOfEnemies = []
-
-        listOfColors = [scene1, scene2, scene3, scene4]
-
-        width = 1280
-
-        clock = pygame.time.Clock()
-
-        currentposX = 0
-        currentAngle = 0
-        radarCenterX = 1160
-        radarCenterY = 380
-        listOfEnemiesX = []
-        listOfEnemiesY = []
-        listOfEnemiesXCurrent = []
-        listOfEnemiesHeight = []
-        listOfEnemiesWidth = []
-        # listOfEnemiesX=[1200,3400,600,5000]
-        # listOfEnemiesY=[300,250,200,350]
-        # listOfEnemiesXCurrent=[0,0,0,0]
-        # listOfEnemiesHeight=[120,120,120,120]
-        # listOfEnemiesWidth=[60,60,60,60]
         for i in range(10):
             side = random.randint(1, 10)
             kind = random.randint(1, 3)
             if 6 >= side:
                 if kind == 1:
-                    listOfEnemies.append(pygame.image.load('chicken_head.png'))
+                    self.listOfEnemies.append(self.chickenHead)
                 if kind == 2:
-                    listOfEnemies.append(pygame.image.load('nun_head.png'))
+                    self.listOfEnemies.append(self.nunHead)
                 if kind == 3:
-                    listOfEnemies.append(pygame.image.load('clown_head.png'))
+                    self.listOfEnemies.append(self.clownHead)
                 number = random.randint(0, 34)
-                thechoosen = headPossible[number]
+                thechoosen = self.headPossible[number]
                 first = thechoosen[0]
                 second = thechoosen[1]
-                listOfEnemiesX.append(first)
-                listOfEnemiesY.append(second)
-                listOfEnemiesXCurrent.append(0)
-                listOfEnemiesHeight.append(60)
-                listOfEnemiesWidth.append(60)
+                self.listOfEnemiesX.append(first)
+                self.listOfEnemiesY.append(second)
+                self.listOfEnemiesXCurrent.append(0)
+                self.listOfEnemiesHeight.append(60)
+                self.listOfEnemiesWidth.append(60)
             if side == 7 or side == 8:
                 if kind == 1:
-                    listOfEnemies.append(pygame.image.load('chicken_front.png'))
+                    self.listOfEnemies.append(self.chickenFront)
                 if kind == 2:
-                    listOfEnemies.append(pygame.image.load('nun_front.png'))
+                    self.listOfEnemies.append(self.nunFront)
                 if kind == 3:
-                    listOfEnemies.append(pygame.image.load('clown_front.png'))
+                    self.listOfEnemies.append(self.clownFront)
                 number = random.randint(0, 11)
-                listOfEnemiesX.append(fronPossible[number])
-                listOfEnemiesY.append(380)
-                listOfEnemiesXCurrent.append(0)
-                listOfEnemiesHeight.append(120)
-                listOfEnemiesWidth.append(60)
+                self.listOfEnemiesX.append(self.fronPossible[number])
+                self.listOfEnemiesY.append(380)
+                self.listOfEnemiesXCurrent.append(0)
+                self.listOfEnemiesHeight.append(120)
+                self.listOfEnemiesWidth.append(60)
             if side == 9:
                 if kind == 1:
-                    listOfEnemies.append(pygame.image.load('chicken_right.png'))
+                    self.listOfEnemies.append(self.chickenRight)
                 if kind == 2:
-                    listOfEnemies.append(pygame.image.load('nun_right.png'))
+                    self.listOfEnemies.append(self.nunRight)
                 if kind == 3:
-                    listOfEnemies.append(pygame.image.load('clown_right.png'))
+                    self.listOfEnemies.append(self.clownRight)
                 number = random.randint(0, 8)
-                listOfEnemiesX.append(rightSidePossible[number])
-                listOfEnemiesY.append(380)
-                listOfEnemiesXCurrent.append(0)
-                listOfEnemiesHeight.append(120)
-                listOfEnemiesWidth.append(32)
+                self.listOfEnemiesX.append(self.rightSidePossible[number])
+                self.listOfEnemiesY.append(380)
+                self.listOfEnemiesXCurrent.append(0)
+                self.listOfEnemiesHeight.append(120)
+                self.listOfEnemiesWidth.append(32)
             if side == 10:
                 if kind == 1:
-                    listOfEnemies.append(pygame.image.load('chicken_left.png'))
+                    self.listOfEnemies.append(self.chickenLeft)
                 if kind == 2:
-                    listOfEnemies.append(pygame.image.load('nun_left.png'))
+                    self.listOfEnemies.append(self.nunLeft)
                 if kind == 3:
-                    listOfEnemies.append(pygame.image.load('clown_left.png'))
+                    self.listOfEnemies.append(self.clownLeft)
                 number = random.randint(0, 3)
-                listOfEnemiesX.append(leftSidePossible[number])
-                listOfEnemiesY.append(380)
-                listOfEnemiesXCurrent.append(0)
-                listOfEnemiesHeight.append(120)
-                listOfEnemiesWidth.append(32)
-        print(listOfEnemies)
-        print(listOfEnemiesX)
-        print(listOfEnemiesY)
+                self.listOfEnemiesX.append(self.leftSidePossible[number])
+                self.listOfEnemiesY.append(380)
+                self.listOfEnemiesXCurrent.append(0)
+                self.listOfEnemiesHeight.append(120)
+                self.listOfEnemiesWidth.append(32)
 
-        crossX = 722
-        crossY = 232
 
-        screen.blit(scene1, (currentposX, 0))
-        screen.blit(crossHair, (crossX, crossY))
-        screen.blit(crossHairCenter, (crossX + 8, crossY + 8))
-        screen.blit(radar, (radarCenterX, radarCenterY))
+
+        self.screen.blit(self.scene1, (self.currentposX, 0))
+        self.screen.blit(self.crossHair, (crossX, crossY))
+        self.screen.blit(self.crossHairCenter, (crossX + 8, crossY + 8))
+        self.screen.blit(radar, (self.radarCenterX, self.radarCenterY))
         pygame.display.update()
 
-        gameExit = True
 
         pygame.key.set_repeat(100, 5)
 
-    def drawBackground():
-        if currentposX <= 0 and currentposX > -width:
-            screen.blit(listOfColors[0], (currentposX, 0))
-            screen.blit(listOfColors[1], (currentposX + width, 0))
-        if currentposX <= -width and currentposX > -width * 2:
-            screen.blit(listOfColors[1], (currentposX + width, 0))
-            screen.blit(listOfColors[2], (currentposX + width * 2, 0))
-        if currentposX <= -width * 2 and currentposX > -width * 3:
-            screen.blit(listOfColors[2], (currentposX + width * 2, 0))
-            screen.blit(listOfColors[3], (currentposX + width * 3, 0))
-        if currentposX <= -width * 3 and currentposX >= -width * 4:
-            screen.blit(listOfColors[3], (currentposX + width * 3, 0))
-            screen.blit(listOfColors[0], (currentposX + width * 4, 0))
+    def drawBackground(self):
+        if currentposX <= 0 and currentposX > -self.width:
+            self.screen.blit(self.listOfColors[0], (currentposX, 0))
+            self.screen.blit(self.listOfColors[1], (currentposX + self.width, 0))
+        if currentposX <= -self.width and currentposX > -self.width * 2:
+            self.screen.blit(self.listOfColors[1], (currentposX + self.width, 0))
+            self.screen.blit(self.listOfColors[2], (currentposX + self.width * 2, 0))
+        if currentposX <= -self.width * 2 and currentposX > -self.width * 3:
+            self.screen.blit(self.listOfColors[2], (currentposX + self.width * 2, 0))
+            self.screen.blit(self.listOfColors[3], (currentposX + self.width * 3, 0))
+        if currentposX <= -self.width * 3 and currentposX >= -self.width * 4:
+            self.screen.blit(self.listOfColors[3], (currentposX + self.width * 3, 0))
+            self.screen.blit(self.listOfColors[0], (currentposX + self.width * 4, 0))
 
-    def drawEnemies():
+    def drawEnemies(self):
         global currentposX, radarSign, currentAngle, radar, crossY, crossX
-        for i in range(len(listOfEnemiesX)):
-            alpha = listOfEnemiesX[i] / 5120 * 360
+        for i in range(len(self.listOfEnemiesX)):
+            alpha = self.listOfEnemiesX[i] / 5120 * 360
             alphar = math.radians(alpha)
             sin = math.sin(alphar)
             cos = math.cos(alphar)
-            circle = pygame.draw.circle(screen, (255, 0, 0),
-                                        [int(radarCenterX + sin * 50 + 50), int(radarCenterY - cos * 50 + 50)], 5)
-            if currentposX < -3 * width:
-                if 4 * width + currentposX + listOfEnemiesX[i] > 0:
-                    listOfEnemiesXCurrent[i] = 4 * width + currentposX + listOfEnemiesX[i]
-                    screen.blit(listOfEnemies[i], (4 * width + currentposX + listOfEnemiesX[i], listOfEnemiesY[i]))
-            if -listOfEnemiesX[i] - listOfEnemiesWidth[i] < currentposX and -listOfEnemiesX[i] + listOfEnemiesWidth[
-                i] > currentposX - width:
-                listOfEnemiesXCurrent[i] = listOfEnemiesX[i] + currentposX
-                screen.blit(listOfEnemies[i], (listOfEnemiesX[i] + currentposX, listOfEnemiesY[i]))
+            circle = pygame.draw.circle(self.screen, (255, 0, 0),
+                                        [int(self.radarCenterX + sin * 50 + 50), int(self.radarCenterY - cos * 50 + 50)], 5)
+            if currentposX < -3 * self.width:
+                if 4 * self.width + currentposX + self.listOfEnemiesX[i] > 0:
+                    self.listOfEnemiesXCurrent[i] = 4 * self.width + currentposX + self.listOfEnemiesX[i]
+                    self.screen.blit(self.listOfEnemies[i], (4 * self.width + currentposX + self.listOfEnemiesX[i], self.listOfEnemiesY[i]))
+            if -self.listOfEnemiesX[i] - self.listOfEnemiesWidth[i] < currentposX and -self.listOfEnemiesX[i] + self.listOfEnemiesWidth[
+                i] > currentposX - self.width:
+                self.listOfEnemiesXCurrent[i] = self.listOfEnemiesX[i] + currentposX
+                self.screen.blit(self.listOfEnemies[i], (self.listOfEnemiesX[i] + currentposX, self.listOfEnemiesY[i]))
 
-    def draw():
-        drawBackground()
-        drawEnemies()
-        screen.blit(crossHair, (crossX, crossY))
-        screen.blit(crossHairCenter, (crossX + 8, crossY + 8))
-        screen.blit(rot_center(radar, currentAngle), (radarCenterX, radarCenterY))
+    def draw(self):
+        self.drawBackground()
+        self.drawEnemies()
+        self.screen.blit(self.crossHair, (crossX, crossY))
+        self.screen.blit(self.crossHairCenter, (crossX + 8, crossY + 8))
+        self.screen.blit(self.rot_center(radar, currentAngle), (self.radarCenterX, self.radarCenterY))
         pygame.display.update()
 
-    def paff():
-        for i in range(len(listOfEnemiesX)):
+    def paff(self):
+        for i in range(len(self.listOfEnemiesX)):
             x = 0
             y = 0
-            if listOfEnemiesXCurrent[i] - 20 < crossX + 8 and listOfEnemiesXCurrent[i] + 60 > crossX + 8:
-                if listOfEnemiesY[i] - 20 < crossY + 8 and listOfEnemiesY[i] + 120 > crossY + 8:
-                    if listOfEnemiesXCurrent[i] - crossX - 8 < 20 and listOfEnemiesXCurrent[i] - crossX - 8 > 0:
-                        x = 20 - (listOfEnemiesXCurrent[i] - crossX - 8)
-                    elif listOfEnemiesXCurrent[i] - crossX - 8 <= 0 and listOfEnemiesXCurrent[
-                        i] - crossX - 8 >= 20 - listOfEnemiesWidth[i]:
+            if self.listOfEnemiesXCurrent[i] - 20 < crossX + 8 and self.listOfEnemiesXCurrent[i] + 60 > crossX + 8:
+                if self.listOfEnemiesY[i] - 20 < crossY + 8 and self.listOfEnemiesY[i] + 120 > crossY + 8:
+                    if self.listOfEnemiesXCurrent[i] - crossX - 8 < 20 and self.listOfEnemiesXCurrent[i] - crossX - 8 > 0:
+                        x = 20 - (self.listOfEnemiesXCurrent[i] - crossX - 8)
+                    elif self.listOfEnemiesXCurrent[i] - crossX - 8 <= 0 and self.listOfEnemiesXCurrent[
+                        i] - crossX - 8 >= 20 - self.listOfEnemiesWidth[i]:
                         x = 20
-                    elif listOfEnemiesXCurrent[i] - crossX - 8 < 20 - listOfEnemiesWidth[i] and \
-                                                    listOfEnemiesXCurrent[i] - crossX - 8 > -listOfEnemiesWidth[
+                    elif self.listOfEnemiesXCurrent[i] - crossX - 8 < 20 - self.listOfEnemiesWidth[i] and \
+                                                    self.listOfEnemiesXCurrent[i] - crossX - 8 > -self.listOfEnemiesWidth[
                                 i] - 20:
-                        x = abs(listOfEnemiesXCurrent[i] - crossX - 8 + listOfEnemiesWidth[i])
-                    if listOfEnemiesY[i] - crossY - 8 < 20 and listOfEnemiesY[i] - crossY - 8 > 0:
-                        y = 20 - (listOfEnemiesY[i] - crossY - 8)
-                    elif listOfEnemiesY[i] - crossY - 8 <= 0 and listOfEnemiesY[i] - crossY - 8 >= 20 - \
-                            listOfEnemiesHeight[i]:
+                        x = abs(self.listOfEnemiesXCurrent[i] - crossX - 8 + self.listOfEnemiesWidth[i])
+                    if self.listOfEnemiesY[i] - crossY - 8 < 20 and self.listOfEnemiesY[i] - crossY - 8 > 0:
+                        y = 20 - (self.listOfEnemiesY[i] - crossY - 8)
+                    elif self.listOfEnemiesY[i] - crossY - 8 <= 0 and self.listOfEnemiesY[i] - crossY - 8 >= 20 - \
+                            self.listOfEnemiesHeight[i]:
                         y = 20
-                    elif listOfEnemiesY[i] - crossY - 8 < listOfEnemiesHeight[i] and listOfEnemiesY[
-                        i] - crossY - 8 > -listOfEnemiesHeight[i] - 20:
-                        y = abs(listOfEnemiesY[i] - crossY - 8 + listOfEnemiesHeight[i])
+                    elif self.listOfEnemiesY[i] - crossY - 8 < self.listOfEnemiesHeight[i] and self.listOfEnemiesY[
+                        i] - crossY - 8 > -self.listOfEnemiesHeight[i] - 20:
+                        y = abs(self.listOfEnemiesY[i] - crossY - 8 + self.listOfEnemiesHeight[i])
                     shot = random.randint(0, 400)
                     if shot <= x * y:
-                        del listOfEnemies[i]
-                        del listOfEnemiesX[i]
-                        del listOfEnemiesY[i]
-                        del listOfEnemiesXCurrent[i]
-                        del listOfEnemiesWidth[i]
-                        del listOfEnemiesHeight[i]
-                        # listOfEnemies.remove(listOfEnemies[i])
-                        # listOfEnemiesX.remove(listOfEnemiesX[i])
-                        # listOfEnemiesY.remove(listOfEnemiesY[i])
-                        # listOfEnemiesXCurrent.remove(listOfEnemiesXCurrent[i])
-                        # listOfEnemiesWidth.remove(listOfEnemiesWidth[i])
-                        # listOfEnemiesHeight.remove(listOfEnemiesHeight[i])
-                        print(listOfEnemies)
-                        print(listOfEnemiesX)
-                        print(listOfEnemiesY)
+                        del self.listOfEnemies[i]
+                        del self.listOfEnemiesX[i]
+                        del self.listOfEnemiesY[i]
+                        del self.listOfEnemiesXCurrent[i]
+                        del self.listOfEnemiesWidth[i]
+                        del self.listOfEnemiesHeight[i]
                         break
-        draw()
+        self.draw()
 
-    def rot_center(image, angle):
+    def rot_center(self, image, angle):
         orig_rect = image.get_rect()
         rot_image = pygame.transform.rotate(image, angle)
         rot_rect = orig_rect.copy()
@@ -222,49 +235,49 @@ class PlaySceneSingle(Scene):
         rot_image = rot_image.subsurface(rot_rect).copy()
         return rot_image
 
-    def moveLeftRight(change, changeAngle):
+    def moveLeftRight(self, change, changeAngle):
         global currentposX, radarSign, currentAngle, radar, crossY, crossX
-        if currentposX < -width * 4:
+        if currentposX < -self.width * 4:
             currentposX = 0
         if currentposX > 0:
-            currentposX = -width * 4
+            currentposX = -self.width * 4
         currentposX += change
         currentAngle += changeAngle
         if currentAngle == 360:
             currentAngle = 0
         if currentAngle == -360:
             currentAngle = 0
-        draw()
+        self.draw()
 
-    def moveUpDown(change):
+    def moveUpDown(self, change):
         global currentposX, radarSign, currentAngle, radar, crossY, crossX
         crossY += change
         if crossY < 0:
             crossY = 0
         if crossY > 464:
             crossY = 464
-        draw()
+        self.draw()
 
-    while gameExit:
-        changeX = 0
+
+    def handleEvents(self, events):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                gameExit = False
+                exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    changeX = 10
+                    self.changeX = 10
                     changeAngle = 0.703125
-                    moveLeftRight(changeX, changeAngle)
+                    self.moveLeftRight(self.changeX, changeAngle)
                 elif event.key == pygame.K_RIGHT:
-                    changeX = -10
+                    self.changeX = -10
                     changeAngle = -0.703125
-                    moveLeftRight(changeX, changeAngle)
+                    self.moveLeftRight(self.changeX, changeAngle)
                 elif event.key == pygame.K_UP:
                     changeY = -4
-                    moveUpDown(changeY)
+                    self.moveUpDown(changeY)
                 elif event.key == pygame.K_DOWN:
                     changeY = 4
-                    moveUpDown(changeY)
+                    self.moveUpDown(changeY)
                 elif event.key == pygame.K_SPACE:
-                    paff()
+                    self.paff()
 

@@ -15,12 +15,14 @@ class MenuScene(Scene):
         self.__currentIndex = 0
 
     def render(self, centered=False, y=0):
-        self.getGameController().playSound(GameConstants.SOUND_SCENE_MENU)
+
         self.getGameController().fillBackGround()
         super(MenuScene, self).render(True)
         pygame.display.flip()
 
     def handleEvents(self, events):
+        game = self.getGameController()
+        game.playSound(GameConstants.SOUND_SCENE_MENU, indefinitely=1)
         for event in events:
             if event.type == QUIT:
                 exit()

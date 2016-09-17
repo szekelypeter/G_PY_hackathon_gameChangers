@@ -1,6 +1,8 @@
 
 
 import pygame
+
+from Maps import Map
 from Scenes import *
 from Shared import GameConstants
 
@@ -20,6 +22,7 @@ class GameController:
         self.__screen = pygame.display.set_mode(GameConstants.SCREEN_SIZE)
         self.__background = pygame.Surface(self.__screen.get_size()).convert()
         self.__background.fill(GameConstants.BLACK)
+        self.__currentSound = None
         self.__sounds = \
             [
                 pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_START_LOADING_HORSE),
@@ -59,10 +62,13 @@ class GameController:
     def getPlayer(self):
         pass
 
-    def playSound(self, soundClip):
+    def playSound(self, soundClip, indefinitely=0):
         sound = self.__sounds[soundClip]
-        # sound.stop()
-        sound.play()
+        self.__currentSound = sound
+        sound.play(indefinitely)
+
+    def stopSound(self):
+        self.__currentSound.stop()
 
     def getClock(self):
         return self.__clock
