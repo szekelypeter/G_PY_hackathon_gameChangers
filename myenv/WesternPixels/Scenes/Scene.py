@@ -11,9 +11,11 @@ class Scene:
 
     def render(self, centered=False, y=0):
         for text in self.__texts:
+            print(text[2])
             if centered:
                 self.__gameController.getScreen().blit(text[0], text[0].get_rect(center=(GameConstants.WINDOW_CENTER[0],
-                                                                                GameConstants.WINDOW_CENTER[0] + y)))
+                                                                                GameConstants.WINDOW_CENTER[0] + y +
+                                                                                         text[2])))
             else:
                 self.__gameController.getScreen().blit(text[0], text[1])
 
@@ -26,6 +28,10 @@ class Scene:
     def clearText(self):
         self.__texts = []
 
-    def addText(self, string, x=0, y=0, color=[255, 255, 255], background=[0, 0, 0], size=17):
+    def addText(self, string, x=0, y=0, color=[255, 255, 255], background=[0, 0, 0], size=17, y_coordinate=0):
         font = pygame.font.Font(None, size)
-        self.__texts.append([font.render(string, True, color, background), (x, y)])
+        self.__texts.append([font.render(string, True, color, background), (x, y), y_coordinate])
+
+    def changeText(self, string, x=0, y=0, color=[255, 255, 255], background=[0, 0, 0], size=17, index=-1, y_coordinate=0):
+        font = pygame.font.Font(None, size)
+        self.__texts[index] = [font.render(string, True, color, background), (x, y), y_coordinate]

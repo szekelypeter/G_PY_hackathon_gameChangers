@@ -18,6 +18,8 @@ class GameController:
 
         self.__clock = pygame.time.Clock()
         self.__screen = pygame.display.set_mode(GameConstants.SCREEN_SIZE)
+        self.__background = pygame.Surface(self.__screen.get_size()).convert()
+        self.__background.fill(GameConstants.BLACK)
         self.__sounds = []
         self.__gameMode = GameConstants.GAME_MODE_SINGLE_PLAYER
         self.__currentDifficulty = GameConstants.DIFFICULTY_NORMAL
@@ -61,4 +63,6 @@ class GameController:
     def getScreen(self):
         return self.__screen
 
+    def fillBackGround(self):
+        self.__screen.blit(self.__background, (0, 0))
 GameController().start()

@@ -5,6 +5,13 @@ class GameConstants:
     SCREEN_SIZE = (800, 600)
     WINDOW_CENTER = (SCREEN_SIZE[0] / 2, SCREEN_SIZE[1] / 2)
 
+    BLACK = (0, 0, 0)
+    RED = (255, 0, 0)
+
+    MENU_PLAY = ("Play", -300)
+    MENU_HIGHSCORE = ("HighScore", -100)
+    MENU_EXIT = ("Exit", 100)
+
     FPS = 60
 
     SCENE_START = 0

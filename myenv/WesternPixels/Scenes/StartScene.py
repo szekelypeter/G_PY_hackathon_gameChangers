@@ -28,7 +28,6 @@ class StartScene(Scene):
             if seconds > GameConstants.LOADING_TIME:
                 self.getGameController().setScene(GameConstants.SCENE_MENU)
                 break
-            print(seconds)
 
     def handleEvents(self, events):
         for event in events:
