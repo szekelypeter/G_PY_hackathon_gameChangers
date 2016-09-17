@@ -15,6 +15,7 @@ class MenuScene(Scene):
         self.__currentIndex = 0
 
     def render(self, centered=False, y=0):
+        self.getGameController().playSound(GameConstants.SOUND_SCENE_MENU)
         self.getGameController().fillBackGround()
         super(MenuScene, self).render(True)
         pygame.display.flip()

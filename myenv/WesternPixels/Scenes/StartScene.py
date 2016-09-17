@@ -15,6 +15,7 @@ class StartScene(Scene):
 
     def render(self, centered=False, y=0):
         start_ticks = pygame.time.get_ticks()
+        self.getGameController().playSound(GameConstants.SOUND_SCENE_START_LOADING_HORSE)
         while True:
             super(StartScene, self).render(True, -150)
             seconds = (pygame.time.get_ticks() - start_ticks) / 1000

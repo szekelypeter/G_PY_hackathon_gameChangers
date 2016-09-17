@@ -20,7 +20,11 @@ class GameController:
         self.__screen = pygame.display.set_mode(GameConstants.SCREEN_SIZE)
         self.__background = pygame.Surface(self.__screen.get_size()).convert()
         self.__background.fill(GameConstants.BLACK)
-        self.__sounds = []
+        self.__sounds = \
+            [
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_START_LOADING_HORSE),
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_MENU),
+            ]
         self.__gameMode = GameConstants.GAME_MODE_SINGLE_PLAYER
         self.__currentDifficulty = GameConstants.DIFFICULTY_NORMAL
         self.__difficulties = []
@@ -55,8 +59,10 @@ class GameController:
     def getPlayer(self):
         pass
 
-    def playSound(self):
-        pass
+    def playSound(self, soundClip):
+        sound = self.__sounds[soundClip]
+        # sound.stop()
+        sound.play()
 
     def getClock(self):
         return self.__clock

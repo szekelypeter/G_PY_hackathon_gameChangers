@@ -37,3 +37,9 @@ class GameConstants:
 
     IMAGE_SCENE_START_LOADING_ONE = os.path.join("Assets", "Images", "Scenes", "Start", "horse.png")
     IMAGE_SCENE_START_LOADING_TWO = os.path.join("Assets", "Images", "Scenes", "Start", "horse1.png")
+
+    SOUND_FILE_SCENE_START_LOADING_HORSE = os.path.join("Assets", "Sounds", "Scenes", "Start", "horse_gallop.ogg")
+    SOUND_FILE_SCENE_MENU = os.path.join("Assets", "Sounds", "Scenes", "Menu", "menu.ogg")
+
+    SOUND_SCENE_START_LOADING_HORSE = 0
+    SOUND_SCENE_MENU = 1
