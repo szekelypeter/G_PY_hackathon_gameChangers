@@ -31,9 +31,10 @@ class GameController:
         [
             StartScene(self),
             MenuScene(self),
-            OptionScene(self),
+            OptionPlayerModeScene(self),
             HighScoreScene(self),
-            PlayScene(self),
+            PlaySceneSingle(self),
+            PlaySceneMulti(self),
             GameOverScene(self)
         ]
 

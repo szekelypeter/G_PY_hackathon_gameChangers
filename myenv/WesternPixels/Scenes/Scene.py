@@ -11,7 +11,6 @@ class Scene:
 
     def render(self, centered=False, y=0):
         for text in self.__texts:
-            print(text[2])
             if centered:
                 self.__gameController.getScreen().blit(text[0], text[0].get_rect(center=(GameConstants.WINDOW_CENTER[0],
                                                                                 GameConstants.WINDOW_CENTER[0] + y +

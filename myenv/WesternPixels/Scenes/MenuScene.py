@@ -41,7 +41,7 @@ class MenuScene(Scene):
                     self.__currentIndex = 2
                 if event.key == K_4:
                     if self.__currentIndex == 0:
-                        self.getGameController().setScene(GameConstants.SCENE_OPTION)
+                        self.getGameController().setScene(GameConstants.SCENE_OPTION_PLAYER_MODE)
                     if self.__currentIndex == 1:
                         self.getGameController().setScene(GameConstants.SCENE_HIGHSCORE)
                     if self.__currentIndex == 2:
