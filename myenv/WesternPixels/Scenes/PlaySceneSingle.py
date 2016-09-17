@@ -323,7 +323,9 @@ class PlaySceneSingle(Scene):
                     self.moveUpDown(changeY)
                     return
             if event.type == JOYBUTTONDOWN:
+                if gameController.joy1.get_button(0) == True:
+                    exit()
                 if gameController.joy1.get_button(10) == True:
                     self.paff()
-                    return 
+                    return
 
