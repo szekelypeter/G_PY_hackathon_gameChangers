@@ -73,6 +73,7 @@ class PlaySceneSingle(Scene):
 
         start_ticks = pygame.time.get_ticks()
         self.end_ticks = start_ticks + 15000
+        print(self.end_ticks)
 
 
 
@@ -308,6 +309,7 @@ class PlaySceneSingle(Scene):
             if event.type == QUIT:
                 exit()
             if self.end_ticks <= pygame.time.get_ticks():
+                print(pygame.time.get_ticks())
                 print("VEGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
             if event.type == JOYAXISMOTION:
                 if self.gameController.joy1.get_axis(0) < 0:
