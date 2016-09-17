@@ -254,11 +254,11 @@ class PlaySceneSingle(Scene):
                     shot = random.randint(0, 400)
                     if shot <= x * y:
                         if self.listOfEnemiesSpecies[i]=="chicken":
-                            game.playSound(9, indefinitely=0, inTheTarge=True)
+                            game.playSound(9, indefinitely=0)
                         if self.listOfEnemiesSpecies[i] == "clown":
-                            game.playSound(10, indefinitely=0, inTheTarge=True)
+                            game.playSound(10, indefinitely=0)
                         if self.listOfEnemiesSpecies[i] == "nun":
-                            game.playSound(11, indefinitely=0, inTheTarge=True)
+                            game.playSound(11, indefinitely=0)
                         del self.listOfEnemiesSpecies[i]
                         del self.listOfEnemies[i]
                         del self.listOfEnemiesX[i]
