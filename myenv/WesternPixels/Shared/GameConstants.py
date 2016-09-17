@@ -2,7 +2,7 @@ import os
 
 class GameConstants:
 
-    SCREEN_SIZE = (1280, 700)
+    SCREEN_SIZE = (1280, 1024)
     WINDOW_CENTER = (SCREEN_SIZE[0] / 2, SCREEN_SIZE[1] / 2)
 
     BLACK = (0, 0, 0)

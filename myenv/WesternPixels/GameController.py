@@ -37,7 +37,7 @@ class GameController:
         # -------- Main Program Loop ----------
 
         self.__clock = pygame.time.Clock()
-        self.__screen = pygame.display.set_mode(GameConstants.SCREEN_SIZE)
+        self.__screen = pygame.display.set_mode(GameConstants.SCREEN_SIZE, pygame.FULLSCREEN)
         self.__background = pygame.Surface(self.__screen.get_size()).convert()
         self.__background.fill(GameConstants.BLACK)
         self.__currentSound = None
