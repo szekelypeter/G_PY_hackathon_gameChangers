@@ -28,6 +28,14 @@ class GameController:
             [
                 pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_START_LOADING_HORSE),
                 pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_MENU),
+
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_PUFF_1),
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_PUFF_2),
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_PUFF_3),
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_PUFF_4),
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_PUFF_5),
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_PUFF_6),
+                pygame.mixer.Sound(GameConstants.SOUND_FILE_SCENE_PLAY_PUFF_7),
             ]
         self.__gameMode = GameConstants.GAME_MODE_SINGLE_PLAYER
         self.__currentDifficulty = GameConstants.DIFFICULTY_NORMAL

@@ -69,6 +69,7 @@ class PlaySceneSingle(Scene):
         self.screen = self.getGameController().getScreen()
 
         self.isRenderedOnce = False
+        self.currentPaff = 1
 
 
 
@@ -185,13 +186,10 @@ class PlaySceneSingle(Scene):
                 if 4 * self.width + self.currentposX + self.listOfEnemiesX[i] > 0:
                     self.listOfEnemiesXCurrent[i] = 4 * self.width + self.currentposX + self.listOfEnemiesX[i]
                     self.screen.blit(self.listOfEnemies[i], (4 * self.width + self.currentposX + self.listOfEnemiesX[i], self.listOfEnemiesY[i]))
-                    print(self.listOfEnemies[i], (4 * self.width + self.currentposX + self.listOfEnemiesX[i], self.listOfEnemiesY[i]))
             if -self.listOfEnemiesX[i] - self.listOfEnemiesWidth[i] < self.currentposX and -self.listOfEnemiesX[i] + self.listOfEnemiesWidth[
                 i] > self.currentposX - self.width:
                 self.listOfEnemiesXCurrent[i] = self.listOfEnemiesX[i] + self.currentposX
                 self.screen.blit(self.listOfEnemies[i], (self.listOfEnemiesX[i] + self.currentposX, self.listOfEnemiesY[i]))
-                print(self.listOfEnemies[i], (self.listOfEnemiesX[i] + self.currentposX, self.listOfEnemiesY[i]))
-        print(self.listOfEnemiesX)
         pygame.display.update()
 
     def draw(self):
@@ -204,6 +202,28 @@ class PlaySceneSingle(Scene):
 
 
     def paff(self):
+        game = self.getGameController()
+        if self.currentPaff == 1:
+            game.playSound(2, indefinitely=0)
+            self.currentPaff = 2
+        elif self.currentPaff == 2:
+            game.playSound(3, indefinitely=0)
+            self.currentPaff = 3
+        elif self.currentPaff == 3:
+            game.playSound(4, indefinitely=0)
+            self.currentPaff = 4
+        elif self.currentPaff == 4:
+            game.playSound(5, indefinitely=0)
+            self.currentPaff = 5
+        elif self.currentPaff == 5:
+            game.playSound(6, indefinitely=0)
+            self.currentPaff = 6
+        elif self.currentPaff == 6:
+            game.playSound(7, indefinitely=0)
+            self.currentPaff = 7
+        elif self.currentPaff == 7:
+            game.playSound(8, indefinitely=0)
+            self.currentPaff = 1
         for i in range(len(self.listOfEnemiesX)):
             x = 0
             y = 0
@@ -242,10 +262,11 @@ class PlaySceneSingle(Scene):
                         del self.listOfEnemiesWidth[i]
                         del self.listOfEnemiesHeight[i]
                         break
+
+
         self.draw()
 
     def rot_center(self, image, angle):
-        print("fasz")
         orig_rect = image.get_rect()
         rot_image = pygame.transform.rotate(image, angle)
         rot_rect = orig_rect.copy()

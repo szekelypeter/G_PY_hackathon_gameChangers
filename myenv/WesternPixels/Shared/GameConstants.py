@@ -68,6 +68,14 @@ class GameConstants:
     SOUND_FILE_SCENE_START_LOADING_HORSE = os.path.join("Assets", "Sounds", "Scenes", "Start", "horse_gallop.ogg")
     SOUND_FILE_SCENE_MENU = os.path.join("Assets", "Sounds", "Scenes", "Menu", "menu.ogg")
 
+    SOUND_FILE_SCENE_PLAY_PUFF_1 = os.path.join("Assets", "Sounds", "Scenes", "Play", "Puff", "paff1.ogg")
+    SOUND_FILE_SCENE_PLAY_PUFF_2 = os.path.join("Assets", "Sounds", "Scenes", "Play", "Puff", "paff2.ogg")
+    SOUND_FILE_SCENE_PLAY_PUFF_3 = os.path.join("Assets", "Sounds", "Scenes", "Play", "Puff", "paff3.ogg")
+    SOUND_FILE_SCENE_PLAY_PUFF_4 = os.path.join("Assets", "Sounds", "Scenes", "Play", "Puff", "paff4.ogg")
+    SOUND_FILE_SCENE_PLAY_PUFF_5 = os.path.join("Assets", "Sounds", "Scenes", "Play", "Puff", "paff5.ogg")
+    SOUND_FILE_SCENE_PLAY_PUFF_6 = os.path.join("Assets", "Sounds", "Scenes", "Play", "Puff", "paff6.ogg")
+    SOUND_FILE_SCENE_PLAY_PUFF_7 = os.path.join("Assets", "Sounds", "Scenes", "Play", "Puff", "paff7.ogg")
+
     SOUND_SCENE_START_LOADING_HORSE = 0
     SOUND_SCENE_MENU = 1
 
