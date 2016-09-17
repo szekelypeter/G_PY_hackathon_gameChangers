@@ -19,6 +19,23 @@ class GameController:
         pygame.joystick.init()
         pygame.key.set_repeat(100, 5)
 
+        self.joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
+        for joy in self.joysticks:
+            joy.init()
+        self.joy1 = self.joysticks[0]
+        # joy2 = joysticks[1]
+        self.buttons = self.joy1.get_numbuttons()
+        print(self.buttons)
+        joy_buttons = []
+        for i in range(self.buttons):
+            joy_buttons.append(self.joy1.get_button(i))
+        print(joy_buttons)
+
+        for joy in self.joysticks:
+            if joy.get_init() == True:
+                print("Initialized")
+        # -------- Main Program Loop ----------
+
         self.__clock = pygame.time.Clock()
         self.__screen = pygame.display.set_mode(GameConstants.SCREEN_SIZE)
         self.__background = pygame.Surface(self.__screen.get_size()).convert()

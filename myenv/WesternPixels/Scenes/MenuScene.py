@@ -23,27 +23,27 @@ class MenuScene(Scene):
         pygame.display.flip()
 
     def handleEvents(self, events):
-        game = self.getGameController()
+        gameController = self.getGameController()
         for event in events:
             if event.type == QUIT:
                 exit()
-            if event.type == KEYDOWN:
-                if event.key == K_1:
+            if event.type == JOYBUTTONDOWN:
+                if gameController.joy1.get_button(0) == True:
                     self.changeText(GameConstants.MENU_PLAY[0], background=GameConstants.BLACK, index=0, y=GameConstants.MENU_PLAY[1], y_coordinate=GameConstants.MENU_PLAY[1])
                     self.changeText(GameConstants.MENU_HIGHSCORE[0], index=1, y=GameConstants.MENU_HIGHSCORE[1], y_coordinate= GameConstants.MENU_HIGHSCORE[1])
                     self.changeText(GameConstants.MENU_EXIT[0], index=2, y=GameConstants.MENU_EXIT[1], y_coordinate=GameConstants.MENU_EXIT[1])
                     self.__currentIndex = 0
-                if event.key == K_2:
+                if gameController.joy1.get_button(1) == True:
                     self.changeText(GameConstants.MENU_PLAY[0], index=0, y=GameConstants.MENU_PLAY[1], y_coordinate=GameConstants.MENU_PLAY[1])
                     self.changeText(GameConstants.MENU_HIGHSCORE[0], background=GameConstants.BLACK, index=1, y=GameConstants.MENU_HIGHSCORE[1], y_coordinate= GameConstants.MENU_HIGHSCORE[1])
                     self.changeText(GameConstants.MENU_EXIT[0],  index=2, y=GameConstants.MENU_EXIT[1], y_coordinate=GameConstants.MENU_EXIT[1])
                     self.__currentIndex = 1
-                if event.key == K_3:
+                if gameController.joy1.get_button(2) == True:
                     self.changeText(GameConstants.MENU_PLAY[0], index=0, y=GameConstants.MENU_PLAY[1], y_coordinate=GameConstants.MENU_PLAY[1])
                     self.changeText(GameConstants.MENU_HIGHSCORE[0],  index=1, y=GameConstants.MENU_HIGHSCORE[1], y_coordinate= GameConstants.MENU_HIGHSCORE[1])
                     self.changeText(GameConstants.MENU_EXIT[0], background=GameConstants.BLACK, index=2, y=GameConstants.MENU_EXIT[1], y_coordinate=GameConstants.MENU_EXIT[1])
                     self.__currentIndex = 2
-                if event.key == K_4:
+                if gameController.joy1.get_button(10) == True:
                     if self.__currentIndex == 0:
                         self.getGameController().setScene(GameConstants.SCENE_OPTION_PLAYER_MODE)
                     if self.__currentIndex == 1:

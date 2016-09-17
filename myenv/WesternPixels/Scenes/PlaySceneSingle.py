@@ -298,25 +298,27 @@ class PlaySceneSingle(Scene):
 
 
     def handleEvents(self, events):
+        gameController = self.getGameController()
         changeX = 0
         for event in events:
             if event.type == QUIT:
                 exit()
-            if event.type == KEYDOWN:
-                if event.key == K_LEFT:
+            if event.type == JOYAXISMOTION:
+                if gameController.joy1.get_axis(0) < 0:
                     changeX = 10
                     changeAngle = 0.703125
                     self.moveLeftRight(changeX, changeAngle)
-                elif event.key == K_RIGHT:
+                elif gameController.joy1.get_axis(0) > 0:
                     changeX = -10
                     changeAngle = -0.703125
                     self.moveLeftRight(changeX, changeAngle)
-                elif event.key == K_UP:
+                elif gameController.joy1.get_axis(1) < 0:
                     changeY = -4
                     self.moveUpDown(changeY)
-                elif event.key == K_DOWN:
+                elif gameController.joy1.get_axis(1) > 0:
                     changeY = 4
                     self.moveUpDown(changeY)
-                elif event.key == K_SPACE:
+            if event.type == JOYBUTTONDOWN:
+                if gameController.joy1.get_button(10) == True:
                     self.paff()
 
