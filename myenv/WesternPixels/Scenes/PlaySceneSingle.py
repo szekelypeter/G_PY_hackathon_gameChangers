@@ -1,12 +1,14 @@
 import random
+
 import math
 import pygame
+from pygame.locals import *
 
 from Maps import Map
 from Scenes import Scene
-from pygame.locals import *
-
 from Shared import GameConstants
+from Shared.Images import images
+from Shared.Sounds import sounds
 
 
 class PlaySceneSingle(Scene):
@@ -15,30 +17,6 @@ class PlaySceneSingle(Scene):
     def __init__(self, gameController):
         super(PlaySceneSingle, self).__init__(gameController)
         self.map = Map()
-        self.scene1 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_ONE)
-        self.scene2 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_TWO)
-        self.scene3 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_THREE)
-        self.scene4 = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_BACKGROUND_FOUR)
-
-        self.chickenFront = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CHICKEN_FRONT)
-        self.chickenHead = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CHICKEN_HEAD)
-        self.chickenLeft = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CHICKEN_LEFT)
-        self.chickenRight = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CHICKEN_RIGHT)
-
-        self.clownFront = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CLOWN_FRONT)
-        self.clownHead = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CLOWN_HEAD)
-        self.clownLeft = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CLOWN_LEFT)
-        self.clownRight = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_CLOWN_RIGHT)
-
-        self.nunFront = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_NUN_FRONT)
-        self.nunHead = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_NUN_HEAD)
-        self.nunLeft = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_NUN_LEFT)
-        self.nunRight = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_ENEMY_NUN_RIGHT)
-
-        self.crosshairs = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_CROSSHAIRS)
-        self.crosshairsCenter = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_CROSSHAIRS_CENTER)
-        self.radar = pygame.image.load(GameConstants.IMAGE_SCENE_PLAY_RADAR)
-
         self.headPossible = self.map.headPossible
         self.fronPossible = self.map.frontPossible
         self.leftSidePossible = self.map.leftSidePossible
@@ -52,7 +30,7 @@ class PlaySceneSingle(Scene):
         self.crossX = 622 #722
         self.crossY = 232
 
-        self.width = GameConstants.SCREEN_SIZE[0]
+        self.width = GameConstants.ACTUAL_SCREEN_SIZE[0]
 
         self.currentAngle = 0
 
@@ -64,7 +42,7 @@ class PlaySceneSingle(Scene):
         self.listOfEnemiesHeight = []
         self.listOfEnemiesWidth = []
 
-        self.listOfColors = [self.scene1, self.scene2, self.scene3, self.scene4]
+        self.listOfColors = [images["scene 1"], images["scene 2"], images["scene 3"], images["scene 4"]]
 
         self.screen = self.getGameController().getScreen()
 
@@ -82,18 +60,18 @@ class PlaySceneSingle(Scene):
         if not self.isRenderedOnce:
             self.getGameController().fillBackGround()
             self.isRenderedOnce = True
-            for i in range(6):
+            for i in range(20):
                 side = random.randint(1, 10)
                 kind = random.randint(1, 3)
                 if 6 >= side:
                     if kind == 1:
-                        self.listOfEnemies.append(self.chickenHead)
+                        self.listOfEnemies.append(images["chicken Head"])
                         self.listOfEnemiesSpecies.append("chicken")
                     if kind == 2:
-                        self.listOfEnemies.append(self.nunHead)
+                        self.listOfEnemies.append(images["nun Head"])
                         self.listOfEnemiesSpecies.append("nun")
                     if kind == 3:
-                        self.listOfEnemies.append(self.clownHead)
+                        self.listOfEnemies.append(images["clown Head"])
                         self.listOfEnemiesSpecies.append("clown")
                     number = random.randint(0, 34)
                     thechoosen = self.headPossible[number]
@@ -106,13 +84,13 @@ class PlaySceneSingle(Scene):
                     self.listOfEnemiesWidth.append(60)
                 if side == 7 or side == 8:
                     if kind == 1:
-                        self.listOfEnemies.append(self.chickenFront)
+                        self.listOfEnemies.append(images["chicken Front"])
                         self.listOfEnemiesSpecies.append("chicken")
                     if kind == 2:
-                        self.listOfEnemies.append(self.nunFront)
+                        self.listOfEnemies.append(images["nun Front"])
                         self.listOfEnemiesSpecies.append("nun")
                     if kind == 3:
-                        self.listOfEnemies.append(self.clownFront)
+                        self.listOfEnemies.append(images["clown Front"])
                         self.listOfEnemiesSpecies.append("clown")
                     number = random.randint(0, 11)
                     self.listOfEnemiesX.append(self.fronPossible[number])
@@ -122,13 +100,13 @@ class PlaySceneSingle(Scene):
                     self.listOfEnemiesWidth.append(60)
                 if side == 9:
                     if kind == 1:
-                        self.listOfEnemies.append(self.chickenRight)
+                        self.listOfEnemies.append(images["chicken Right"])
                         self.listOfEnemiesSpecies.append("chicken")
                     if kind == 2:
-                        self.listOfEnemies.append(self.nunRight)
+                        self.listOfEnemies.append(images["nun Right"])
                         self.listOfEnemiesSpecies.append("nun")
                     if kind == 3:
-                        self.listOfEnemies.append(self.clownRight)
+                        self.listOfEnemies.append(images["clown Right"])
                         self.listOfEnemiesSpecies.append("clown")
                     number = random.randint(0, 8)
                     self.listOfEnemiesX.append(self.rightSidePossible[number])
@@ -138,13 +116,13 @@ class PlaySceneSingle(Scene):
                     self.listOfEnemiesWidth.append(32)
                 if side == 10:
                     if kind == 1:
-                        self.listOfEnemies.append(self.chickenLeft)
+                        self.listOfEnemies.append(images["chicken Left"])
                         self.listOfEnemiesSpecies.append("chicken")
                     if kind == 2:
-                        self.listOfEnemies.append(self.nunLeft)
+                        self.listOfEnemies.append(images["nun Left"])
                         self.listOfEnemiesSpecies.append("nun")
                     if kind == 3:
-                        self.listOfEnemies.append(self.clownLeft)
+                        self.listOfEnemies.append(images["clown Left"])
                         self.listOfEnemiesSpecies.append("clown")
                     number = random.randint(0, 3)
                     self.listOfEnemiesX.append(self.leftSidePossible[number])
@@ -155,10 +133,10 @@ class PlaySceneSingle(Scene):
 
 
 
-            self.screen.blit(self.scene1, (self.currentposX, 0))
-            self.screen.blit(self.crosshairs, (self.crossX, self.crossY))
-            self.screen.blit(self.crosshairsCenter, (self.crossX + 8, self.crossY + 8))
-            self.screen.blit(self.radar, (self.radarCenterX, self.radarCenterY))
+            self.screen.blit(images["scene 1"], (self.currentposX, 0))
+            self.screen.blit(images["crosshairs"], (self.crossX, self.crossY))
+            self.screen.blit(images["crosshairs Center"], (self.crossX + 8, self.crossY + 8))
+            self.screen.blit(images["radar"], (self.radarCenterX, self.radarCenterY))
             pygame.display.update()
 
 
@@ -199,34 +177,34 @@ class PlaySceneSingle(Scene):
     def draw(self):
         self.drawBackground()
         self.drawEnemies()
-        self.screen.blit(self.crosshairs, (self.crossX, self.crossY))
-        self.screen.blit(self.crosshairsCenter, (self.crossX + 8, self.crossY + 8))
-        self.screen.blit(self.rot_center(self.radar, self.currentAngle), (self.radarCenterX, self.radarCenterY))
+        self.screen.blit(images["crosshairs"], (self.crossX, self.crossY))
+        self.screen.blit(images["crosshairs Center"], (self.crossX + 8, self.crossY + 8))
+        self.screen.blit(self.rot_center(images["radar"], self.currentAngle), (self.radarCenterX, self.radarCenterY))
         pygame.display.update()
 
 
     def paff(self):
         game = self.getGameController()
         if self.currentPaff == 1:
-            game.playSound(2, indefinitely=0, gun=True)
+            game.playSound(sounds["puff 1"], indefinitely=0, gun=True)
             self.currentPaff = 2
         elif self.currentPaff == 2:
-            game.playSound(3, indefinitely=0, gun=True)
+            game.playSound(sounds["puff 2"], indefinitely=0, gun=True)
             self.currentPaff = 3
         elif self.currentPaff == 3:
-            game.playSound(4, indefinitely=0, gun=True)
+            game.playSound(sounds["puff 3"], indefinitely=0, gun=True)
             self.currentPaff = 4
         elif self.currentPaff == 4:
-            game.playSound(5, indefinitely=0, gun=True)
+            game.playSound(sounds["puff 4"], indefinitely=0, gun=True)
             self.currentPaff = 5
         elif self.currentPaff == 5:
-            game.playSound(6, indefinitely=0, gun=True)
+            game.playSound(sounds["puff 5"], indefinitely=0, gun=True)
             self.currentPaff = 6
         elif self.currentPaff == 6:
-            game.playSound(7, indefinitely=0, gun=True)
+            game.playSound(sounds["puff 6"], indefinitely=0, gun=True)
             self.currentPaff = 7
         elif self.currentPaff == 7:
-            game.playSound(8, indefinitely=0, gun=True)
+            game.playSound(sounds["puff 7"], indefinitely=0, gun=True)
             self.currentPaff = 1
         pygame.time.delay(350)
         for i in range(len(self.listOfEnemiesX)):
@@ -254,11 +232,11 @@ class PlaySceneSingle(Scene):
                     shot = random.randint(0, 400)
                     if shot <= x * y:
                         if self.listOfEnemiesSpecies[i]=="chicken":
-                            game.playSound(9, indefinitely=0)
+                            game.playSound(sounds["chicken"], indefinitely=0)
                         if self.listOfEnemiesSpecies[i] == "clown":
-                            game.playSound(10, indefinitely=0)
+                            game.playSound(sounds["clown"], indefinitely=0)
                         if self.listOfEnemiesSpecies[i] == "nun":
-                            game.playSound(11, indefinitely=0)
+                            game.playSound(sounds["nun"], indefinitely=0)
                         del self.listOfEnemiesSpecies[i]
                         del self.listOfEnemies[i]
                         del self.listOfEnemiesX[i]
@@ -311,29 +289,35 @@ class PlaySceneSingle(Scene):
             if self.end_ticks <= pygame.time.get_ticks():
                 print(pygame.time.get_ticks())
                 print("VEGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
-            if event.type == JOYAXISMOTION:
-                if self.gameController.joy1.get_axis(0) < 0:
+            # if event.type == JOYAXISMOTION:
+            #     if self.gameController.joy1.get_axis(0) < 0:
+            if event.type == KEYDOWN:
+                if event.key == K_LEFT:
                     changeX = 10
                     changeAngle = 0.703125
                     self.moveLeftRight(changeX, changeAngle)
                     return
-                elif self.gameController.joy1.get_axis(0) > 0:
+                elif event.key == K_RIGHT:
+                # elif self.gameController.joy1.get_axis(0) > 0:
                     changeX = -10
                     changeAngle = -0.703125
                     self.moveLeftRight(changeX, changeAngle)
                     return
-                elif self.gameController.joy1.get_axis(1) < 0:
+                elif event.key == K_UP:
+                # elif self.gameController.joy1.get_axis(1) < 0:
                     changeY = -4
                     self.moveUpDown(changeY)
                     return
-                elif self.gameController.joy1.get_axis(1) > 0:
+                elif event.key == K_DOWN:
+                # elif self.gameController.joy1.get_axis(1) > 0:
                     changeY = 4
                     self.moveUpDown(changeY)
                     return
-            if event.type == JOYBUTTONDOWN:
-                if self.gameController.joy1.get_button(0) == True:
-                    exit()
-                if self.gameController.joy1.get_button(10) == True:
+            # if event.type == JOYBUTTONDOWN:
+            #     if self.gameController.joy1.get_button(0) == True:
+            #         exit()
+            #     if self.gameController.joy1.get_button(10) == True:
+                elif event.key == K_SPACE:
                     self.paff()
                     return
 
